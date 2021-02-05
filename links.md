@@ -7,3 +7,6 @@
 [프론트엔드 인터뷰 핸드북](https://github.com/yangshun/front-end-interview-handbook/tree/master/contents/kr)
 
 [Front-end Developer Interview Questions](https://github.com/h5bp/Front-end-Developer-Interview-Questions)
+
+
+[자바스크립트 개발자라면 알아야 할 33가지](https://velog.io/@jakeseo_me/2019-03-15-2303-%EC%9E%91%EC%84%B1%EB%90%A8-rmjta5a3xh)

@@ -2,26 +2,32 @@
   - [호이스팅이란](./answers.md/#호이스팅이란)
   - [클로저란](./answers.md/#클로저란)
   - [프로토타입이란](./answers.md/#프로토타입이란)
-
-# HTML
+  - [React와 Vue](./answers.md/#react와-vue)
+  - [React와 Redux](./answers.md/#react와-redux)
+  - [state와 prop](./answers.md/#state와-prop)
+  - [Event Bubbling/Capture/Delegation](./answers.md/#event-bubblingcapturedelegation)
+  - [ES6 주요 문법](./answers.md/#es6-주요-문법)
+  - [async, await](./answers.md#async,-await)
+  - [.apply, .bind, .call](./answers.md/#.apply,-.bind,-.call)
+  - [Javascript는 싱글 스레드](./answers.md/#javascript는-싱글-스레드)
+# Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
-
-# Tech
+  - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
+# Network
   - [GET과 POST의 차이](./answers.md/#get과-post의-차이)
+  - [CORS](./answers.md/#cors)
+  - [RESTful API](./answers.md/#restful-api)
+# CSS
+  - [SASS, SCSS](./answers.md/#sass-scss)
 
 # ?
-- GET과 POST를 쓰는 경우
-- 왜 React를 쓰는가? React와 다른 라이브러리(Vue.js, Angular)의 비교
-- 왜 Redux를 쓰는가?
-  - prop drilling?
-  - Redux에서 global state를 제공해주는데, useContext를 써서 global한 state를 직접 만들면 되는데 Redux의 장점이 되는 이유가?
-    - https://velog.io/@cada/React-Redux-vs-Context-API
-- SASS, SCSS 사용
-- CORS란
-- RESTful API란
-- 이벤트 버블링, 이벤트 위임
-- 주요 ES6 문법
-- webpack과 babel
+- 세션 인증 방식에서 요즘 토큰 기반 인증 방식을 많이 쓰는데 그때 쓰는게 jwt이고 이게 왜 좋은지
+- outh2 인증 방식
+- 그리고 자바스크립트에서 GC 어떻게 하는지
+- 자바스크립트의 메모리 관리 (https://developer.mozilla.org/ko/docs/Web/JavaScript/Memory_Management)
+- Angular.js 간단하게 알아두기
+- React Hooks?
+- ?? URL, URI
 - 웹 표준?
 - [?] 개발자로서 하고 싶은 것?
 
