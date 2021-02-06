@@ -10,9 +10,11 @@
   - [async, await](./answers.md#async,-await)
   - [.apply, .bind, .call](./answers.md/#.apply,-.bind,-.call)
   - [Javascript는 싱글 스레드](./answers.md/#javascript는-싱글-스레드)
+  - [Typescript는 뭐가 다른가](./answers.md/#typescript는-뭐가-다른가)
 # Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
+  - [SSR과 CSR](./answers.md/#ssr과-csr)
 # Network
   - [GET과 POST의 차이](./answers.md/#get과-post의-차이)
   - [CORS](./answers.md/#cors)
@@ -21,6 +23,8 @@
   - [SASS, SCSS](./answers.md/#sass-scss)
 
 # ?
+typescript의 enum 메소드?
+- 테스트 코드 작성하기
 - 세션 인증 방식에서 요즘 토큰 기반 인증 방식을 많이 쓰는데 그때 쓰는게 jwt이고 이게 왜 좋은지
 - outh2 인증 방식
 - 그리고 자바스크립트에서 GC 어떻게 하는지
@@ -31,6 +35,9 @@
 - 웹 표준?
 - [?] 개발자로서 하고 싶은 것?
 
+- 10분 타이머 만들기 
+- react에서, super하는 것 이해하기
+
 # 과제 리뷰
   - 1차 (과연 물어볼까?)
     - 문제 못 푼 이유
@@ -39,4 +46,4 @@
     - 모듈화가 제대로 되지 않은 이유
       - 컴포넌트 간 데이터 이동
     - ! 오류 처리를 하지 못했음
-    - ! 테스트코드를 작성하지 못했음 
+    - ! 테스트코드를 작성하지 못했음  'p 
