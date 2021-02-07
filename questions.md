@@ -11,6 +11,8 @@
   - [.apply, .bind, .call](./answers.md/#.apply,-.bind,-.call)
   - [Javascript는 싱글 스레드](./answers.md/#javascript는-싱글-스레드)
   - [Typescript는 뭐가 다른가](./answers.md/#typescript는-뭐가-다른가)
+  - [require와 import의 차이](./answers.md/#require와-import의-차이)
+  - [Javascript의 메모리 관리](./answers.md/#javascript의-메모리-관리)
 # Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
@@ -23,6 +25,9 @@
   - [SASS, SCSS](./answers.md/#sass-scss)
 
 # ?
+자바스크립트의 메모리 관리
+자바스크립트의 garbage collection
+저수준 언어와 고수준 언어
 typescript의 enum 메소드?
 - 테스트 코드 작성하기
 - 세션 인증 방식에서 요즘 토큰 기반 인증 방식을 많이 쓰는데 그때 쓰는게 jwt이고 이게 왜 좋은지
