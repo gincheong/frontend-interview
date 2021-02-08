@@ -23,19 +23,21 @@
   - [RESTful API](./answers.md/#restful-api)
 # CSS
   - [SASS, SCSS](./answers.md/#sass-scss)
+# ETC
+  - [디자인 패턴](./answers.md/#디자인-패턴)
+  - [테스트 코드 작성하기](./answers.md/#테스트-코드-작성하기)
 
 # ?
-let과 const는 전역객체로 가지 않음?
-typescript의 enum 메소드?
 - 테스트 코드 작성하기
+typescript의 enum 메소드?
+
 - 세션 인증 방식에서 요즘 토큰 기반 인증 방식을 많이 쓰는데 그때 쓰는게 jwt이고 이게 왜 좋은지
 - outh2 인증 방식
-- 그리고 자바스크립트에서 GC 어떻게 하는지
-- 자바스크립트의 메모리 관리 (https://developer.mozilla.org/ko/docs/Web/JavaScript/Memory_Management)
 - Angular.js 간단하게 알아두기
 - React Hooks?
 - ?? URL, URI
 - 웹 표준?
+- 알고리즘들 몇 개 좀 외워두기, 정렬하는거라던가..
 - [?] 개발자로서 하고 싶은 것?
 
 - 10분 타이머 만들기 
@@ -49,4 +51,4 @@ typescript의 enum 메소드?
     - 모듈화가 제대로 되지 않은 이유
       - 컴포넌트 간 데이터 이동
     - ! 오류 처리를 하지 못했음
-    - ! 테스트코드를 작성하지 못했음  'p 
+    - ! 테스트코드를 작성하지 못했음

@@ -468,6 +468,7 @@ Capture의 경우에는 이벤트가 발생한 요소의 최상위 요소에만 
 ---
 1. 변수 `let`과 `const`
 - 범위가 전역인 `var`와 달리 `let`, `const`는 선언한 내부 블록에서만 유효함.
+- 정확한 표현으로 `var`는 `Function-level Scope`, `let`, `const`는 `Block-level Scope`
 - `let`은 재정의가 불가능하고, `const`는 상수로서 값 변경이 불가능하다.
 ```javascript
 var number = 2;
@@ -482,6 +483,20 @@ const number = 2;
 const number = 3; // (X)
 number = 4; // (X)
 ```
+또한 `var` 변수는 호이스팅에 의해서, 초기화를 하지 않아도 값을 호출할 수 있다.  
+반면에 `let`과 `const`는 초기화 전에 값을 호출하려고 하면 오류가 발생한다.
+```javascript
+console.log(asd); // ReferenceError: 'asd' is not defined
+```
+```javascript
+console.log(asd); // undefined
+var asd = 123; // 호이스팅시에 자동으로 undefined로 초기화됨
+```
+```javascript
+console.log(asd); // ReferenceError: Cannot access 'asd' before initialization
+let asd = 123; // const 도 마찬가지
+```
+`let`과 `const`에는 호이스팅이 발생하지 않는다고 오해할 수도 있는데, 호이스팅을 모두 올바르게 하고 있기 때문에 `before initialization` 같은 에러 메시지를 내놓을 수 있는 것임.
 
 2. Backtick( ` )을 이용한 템플릿 리터럴
 - 문자열 덧셈을 + 없이 간편하게 할 수 있다.
@@ -492,7 +507,7 @@ const innerHTML = `<input type="number" value=${inputValue} />`;
 
 3. 함수 기본 매개변수 값 지정
 ```javascript
-function myFunc(a=10, b=20) {
+function myFunc(a = 10, b = 20) {
   ...
 }
 ```
@@ -1062,3 +1077,18 @@ $div.onclick = function() {
 [링크](https://itstory.tk/entry/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%97%90%EC%84%9C-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98%EC%9D%98-4%EA%B0%80%EC%A7%80-%ED%98%95%ED%83%9C)
 
 ---
+## 디자인 패턴
+---
+[링크](https://beomy.tistory.com/43)  
+TBAdded
+
+---
+## 테스트 코드 작성하기
+---
+
+테스트로 작성했던 코드 기반으로 실행할 것, 그러므로 리액트에 대한 테스트가 된다.
+
+아니 왤케어려워 
+
+React Redux는 testing-library 쓰려는데 자료를 뭐 못 찾겠네  
+store에 등록한 액션들은 어케 실행하는데? 아오 
