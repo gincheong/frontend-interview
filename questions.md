@@ -25,9 +25,7 @@
   - [SASS, SCSS](./answers.md/#sass-scss)
 
 # ?
-자바스크립트의 메모리 관리
-자바스크립트의 garbage collection
-저수준 언어와 고수준 언어
+let과 const는 전역객체로 가지 않음?
 typescript의 enum 메소드?
 - 테스트 코드 작성하기
 - 세션 인증 방식에서 요즘 토큰 기반 인증 방식을 많이 쓰는데 그때 쓰는게 jwt이고 이게 왜 좋은지

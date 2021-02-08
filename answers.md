@@ -502,8 +502,12 @@ function myFunc(a=10, b=20) {
 const numbers = [1, 2, 3];
 
 const newNumbers = numbers.map(val => val + 1);
+const plusNumber = (number) => number + 1;
 // 중괄호를 생략해서 바로 return할 수 있음
 ```
+익명 함수나 콜백 함수로 사용할 수 있다.
+
+어차피 변수에 익명 함수 대입할 수 있음
 
 5. 비구조화 할당
 ```javascript
@@ -540,6 +544,131 @@ connect.then(success => {
   console.error(error); // 출력: Error Occured
 });
 ```
+
+## ! 화살표 함수 선언과, function 키워드 함수 선언의 차이
+[링크](https://poiemaweb.com/es6-arrow-function)  
+
+`this`의 차이  
+
+자바스크립트의 this 키워드는 함수 자체에서 정해져 있는 것이 아니라, 함수가 호출될 때의 환경에 따라 동적으로 정의된다.  
+
+기본적으로는 `this`는 전역 객체에 바인딩된다. (Browser Side에서는 `window`, NodeJS와 같은 Server Side에서는 `global`)  
+정확하게는 생성자 함수와 객체의 메소드를 제외한 모든 함수(내부 함수, 콜백 함수 포함) 내부의 this는 전역 객체를 가리킨다.
+
+```javascript
+function foo() {
+  // 전역 함수에서는 전역 객체가 바인딩
+  console.log(this); // window
+  
+  function bar() {
+    // 내부 함수에서도 상위 객체(함수)가 바인딩되지 않고 전역 객체가 바인딩됨
+    console.log(this); // window
+  }
+  bar();
+}
+foo();
+```
+
+```javascript
+var value = 1;
+const obj = {
+  value: 2,
+  foo: function () {
+    const that = this; // 내부함수의 바인딩을 회피하는 방법
+
+    // 메소드를 호출한 객체에 바인딩됨
+    console.log(this, this.value); // obj 2
+
+    function bar() {
+      // 내부함수로서 this에 전역 객체 바인딩
+      console.log(this. this.value); // window 1
+      console.log(that, that.value); // obj 2
+    }
+    bar();
+  }
+};
+obj.foo();
+```
+위처럼 일반 함수들은 동적으로 `this`가 가리키는 객체가 다르기 때문에 적절히 조절해서 사용해야 한다.
+
+반면에 화살표 함수로 선언한 객체(함수)는 내부의 `this`가 `상위 스코프의 this`를 가져오도록 정적으로 정의된다.
+```javascript
+var value = 1;
+const obj = {
+  value: 2,
+  foo: function () {
+    console.log(this, this.value); // obj 2
+
+    // 화살표 함수로 변경
+    bar = () => {
+      console.log(this, this.value); // obj 2
+    }
+    bar();
+  }
+};
+obj.foo();
+```
+위의 예시에, 이전과 달리 내부함수를 화살표 함수로 정의했기 때문에 상위 스코프(foo 메소드)의 `this`인 `obj`를 가져온다.
+
+따라서 다음과 같은 경우에는 화살표 함수를 사용하는 것을 피하는 것이 좋다.
+
+### 메소드 정의 시
+```javascript
+// Bad
+const person = {
+  name: 'Lee',
+  sayHi: () => console.log(`Hi ${this.name}`)
+};
+
+person.sayHi(); // Hi undefined
+```
+화살표 함수가 `sayHi` 메소드 자체에 대입되므로(?) `this` 또한 현재 `sayHi` 메소드가 있는 객체의 "상위 객체" 를 참조하게 된다. 따라서 화살표 함수 안의 `this`는 전역 객체인 `window`가 들어가므로, name 변수를 찾지 못해 undefined가 출력된다.
+
+위와 같은 경우에는 화살표 함수를 사용하지 않아야 원하는 대로 `this.name`을 가져올 수 있다. 대신 function 키워드를 사용하지 않는 축약 표현이 ES6에 존재하는데, 다음과 같이 사용할 수 있다.
+```javascript
+// Bad
+const person = {
+  name: 'Lee',
+  sayHi() {
+    console.log(`Hi ${this.name}`);
+  },
+};
+
+person.sayHi(); // Hi Lee
+```
+
+### 생성자 함수로 사용
+```javascript
+const Foo = () => {};
+
+// 화살표 함수는 prototype 프로퍼티가 없다
+console.log(Foo.hasOwnProperty('prototype')); // false
+
+const foo = new Foo(); // TypeError: Foo is not a constructor
+```
+화살표 함수는 최상위 객체로부터 `prototype` 객체를 가지고 있지 않아, `prototype` 객체로부터 받아 사용하는 생성자 함수(`constructor()`)를 사용할 수 없다. 따라서 생성자가 될 수 없다.
+
+### 이벤트리스너의 콜백 함수로 사용
+```javascript
+var button = document.getElementById('myButton');
+
+button.addEventListener('click', () => {
+  console.log(this === window); // => true
+  this.innerHTML = 'Clicked button'; // 작동하지 않음
+});
+```
+위와 같이, 이벤트리스너 콜백 함수에 화살표함수를 사용하면 `this`가 전역 객체를 가리키기 떄문에 원하는 작업을 할 수 없다.
+
+```javascript
+var button = document.getElementById('myButton');
+
+button.addEventListener('click', function() {
+  console.log(this === window); // => false
+  this.innerHTML = 'Clicked button'; // 올바르게 작동함
+});
+```
+
+맨날 콜백 함수 화살표함수로 만들고 인자로 event 받아서 event.target으로 element 찾았는데 멍청한 짓이었음
 
 ---
 ## async, await
@@ -928,5 +1057,8 @@ $div.onclick = function() {
 근데 잘 이해가 안 되는데 가비지 컬렉터에서 쓸모없다고 표시하면 바로 수집되어야 하는 거 아닌가?  
 아닌가보다 콜렉터가 가득 차야만 메모리 수집을 한다고 하는 게 바로 수집되지 않는 것을 의미하나보다
 ```
+
+마지막으로, 자바스크립트에서 메모리 누수가 발생할 수 있는 예시들  
+[링크](https://itstory.tk/entry/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%97%90%EC%84%9C-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98%EC%9D%98-4%EA%B0%80%EC%A7%80-%ED%98%95%ED%83%9C)
 
 ---
