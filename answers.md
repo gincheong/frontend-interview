@@ -27,7 +27,7 @@
 - 설정된 스타일, 계산된 위치값을 기반으로 픽셀 값을 채워넣기 시작함
 - 여기서 색, 이미지, 그림자 등이 모두 처리되며 그려짐, 스타일이 복잡할수록 Paint 단계가 오래 걸림
 
-`같이 볼 내용 -> Reflow, Repaint`
+[브라우저는 어떻게 동작하는가?](https://d2.naver.com/helloworld/59361)
 
 ---
 ## 호이스팅이란
@@ -230,13 +230,15 @@ HTML이나, CSS 데이터들이 주로 GET으로 요청되며, 캐싱된다.
 [비교1](https://velog.io/@vraimentres/react-vs-vue-1)
 
 ### 공통점
-- 컴포넌트 기반의 SPA 라이브러리
+- 컴포넌트 기반의 SPA 라이브러리(React)/프레임워크(Vue)
   - 컴포넌트 단위로 데이터 변화를 감지하고, 렌더링이 필요한 부분만 부분적으로 변화시켜줌
 - `prop`, `state`, 그리고 라이프사이클
   - 컴포넌트 단위 개발이라는 공통점 탓에, 사용법은 달라도 기본적인 구조 자체는 비슷함
+  - 리액트의 라이프사이클 (Mount -> Props Update -> State Update -> Unmount)
 - Virtual DOM 사용
   - Virtual DOM을 사용해서, 실제 DOM에 변화가 일어나는 부분만 변화시키기 때문에 성능 이점을 가짐
 
+### 차이점
 1. 컴포넌트의 데이터를 바꿀 때
 - Vue는, `this.{변수} = {값}` 의 형태로 바로 값을 변경할 수 있다. 
 - React는, `this.setState()` 함수를 통해 데이터를 바꾼다, setState함수를 써야만 React의 라이프사이클이 정상적으로 진행된다.
@@ -246,10 +248,13 @@ HTML이나, CSS 데이터들이 주로 GET으로 요청되며, 캐싱된다.
 - Vue는, 기본 HTML 문법을 그대로 따르기 때문에, 특정 환경이 없이도 Vue 메인 스크립트를 불러오기만 하면 어디에서나 작동한다.
 - React는, JSX라는 개별적인 표현 문법을 사용하는데, 그렇기 때문에 Vue와 달리 단순 실행으로는 작동하지 않음. `react-scripts start` 명령어 같은 걸로 따로 JSX를 해석할 환경? 도구가 필요하다.
 
---
+3. 스타일 적용
+- Vue는, 각 요소에 unique한 속성을 추가하여 스타일 적용을 제한할 수 있다.  
+- React는, 다른 라이브러리를 추가해야만 컴포넌트 단위의 스타일 적용이 가능하다.
 
-Vue에서는 각 요소에 unique한 속성을 추가하여 스타일 적용을 제한할 수 있다.  
-React에서는 다른 라이브러리를 추가해야만 컴포넌트 단위의 스타일 적용이 가능하다.
+4. state 변경 시의 리렌더링
+- Vue는, 컴포넌트의 종속성이 자동으로 추적되어 실제로 다시 렌더링이 필요한 컴포넌트를 정확히 알고 있음 (공식문서에서 그렇게 나왔는데 어떤 방식인지는 모르겠음)
+- React는, `shouldComponentUpdate` 함수를 오버라이드해서 컴포넌트가 리렌더링될 지, 아닐 지를 개발자가 직접 결정해야 하며 그런 작업이 필요한 컴포넌트를 스스로 추적해야 한다.
 
 ---
 ## React와 Redux
@@ -1089,8 +1094,70 @@ $div.onclick = function() {
 ---
 ## 디자인 패턴
 ---
-[링크](https://beomy.tistory.com/43)  
-TBAdded
+```
+MVC, MVP, MVVM
+```
+
+## MVC 
+- Model + View + Controller
+  - Model: 데이터를 처리하는 곳
+  - View: UI
+  - Controller: 사용자 입력(Action)을 받아 처리하는 곳
+- 동작 순서
+  - 사용자 Action -> Controller 작업, Model 업데이트 -> Controller가 View 선택 -> View에서 Model을 이용하여 화면 표시
+  - Controller가 여러 개의 View를 선택할 수 있는 `1:N` 구조
+- View와 Model간의 의존도가 크기 떄문에, 애플리케이션의 크기에 따라 복잡도가 과해질 수 있음
+
+## MVP
+- Model + View + Presenter
+  - Controller 대신 Presenter가 존재함
+  - Presenter: View의 요청으로 Model을 가공하여, View에 전달하는 역할 (Controller는 가공만 했었음)
+- 동작 순서
+  - 사용자 Action -> View가 Presenter에 데이터 요청 -> Presenter가 Model에 데이터 요청 -> Model이 데이터 반환 -> Presenter가 데이터 반환 -> View는 데이터를 받아 화면에 표시
+  - Presenter와 View가 `1:1` 구조
+- View와 Model의 의존성을 낮췄으나, 대신 Presenter와 View의 의존도가 커짐
+
+## MVVM
+- Model + View + View Model
+  - View Model이 추가됨
+  - View Model: View를 표현하기 위해 만든, View를 위한 Model. View를 나타내기 위한 Model이자, 필요한 데이터 처리를 수행하는 부분
+- 동작 순서
+  - 사용자 Action -> View에서 `Command 패턴`으로 View Model에 Action 전달 -> View Model이 Model로 데이터 요청 -> Model이 데이터 반환 -> View Model에서 데이터를 받아 가공하여 저장 -> View가 View Model과 `Data Binding`하여 화면 표시
+  - View Model과 View가 `1:N` 구조
+- View와 Model 사이의 의존성이 없으며, `Command 패턴`과 `Data Binding`을 통해 View와 View Model 사이의 의존성도 없앴음
+
+Command 패턴?
+
+Data Binding?
+
+
+## Flux
+React의 디자인 패턴, MVC 패턴의 단점을 보완하기 위한 패턴  
+[링크](https://beomy.tistory.com/44)
+
+![answers1](/assets/answers1.png)  
+데이터가 항상 **Dispatcher** -> **Store** -> **View** -> **Action** -> **Dispatcher** 순으로 전달되는 단방향 데이터 흐름  
+단방향 Flow가 데이터 변화를 훨씬 예측하기 쉽다.
+
+
+Action
+- 데이터의 상태를 변경하는 역할
+- Action의 타입과, Data payload를 묶어 Dispatcher로 전달함
+
+Dispatcher
+- Action 메시지를 감지하는 순간, 콜백 함수를 통해 Store로 전달함
+
+Store (Model)
+- 앱의 상태(State)와, 상태를 변경할 수 있는 메소드를 가지고 있음
+- 어떤 타입의 Action이 전달되었는지에 따라 다른 메소드를 적용하여, 상태를 변경함
+- Store는 **싱글턴 패턴**을 따름 (생성자가 여러 개여도, 최초 생성되는 하나의 객체를 공통적으로 사용하게 하는 방식)
+
+View
+- React에 해당되는 부분
+- Controller View가 Store에서 변경된 데이터를 가져와 자식 View에게 데이터를 전달함
+- 데이터를 전달받은 View는 화면을 새로 렌더링
+
+Redux 에는 Dispatcher 개념이 없고, `Reducer`가 Dispatcher + Store 역할을 한다. 
 
 ---
 ## 테스트 코드 작성하기
@@ -1102,3 +1169,41 @@ TBAdded
 
 React Redux는 testing-library 쓰려는데 자료를 뭐 못 찾겠네  
 store에 등록한 액션들은 어케 실행하는데? 아오 
+
+---
+## 프레임워크와 라이브러리
+---
+
+`프레임워크(Framework)`는 전체적으로 틀, Frame 자체를 해당 프레임워크가 가지고 있어서, 개발자가 그 환경에 맞추어 개발을 한다.  
+메뉴얼이나 룰이 존재하여 그 규칙을 따라야 한다. 
+
+`라이브러리(Library)`는 기능을 제공하는 '도구' 라고 생각하면 된다고 함
+
+"앱의 흐름" 이 어느 쪽에서 제어되느냐로 가른다고도 한다. 프레임워크는 그것이 가진 자체적인 틀에 개발자가 맞추어 개발을 하기 때문에, Flow가 프레임워크 쪽에 있다. 반대로 라이브러리는 개발자가 마음대로 개발하다가, 필요한 경우에 라이브러리의 코드를 가져다 쓰는 형태이기 때문에 Flow가 개발자 쪽에 있다. 는 개념으로 생각하면 될 듯함
+
+---
+## JSON Web Token
+---
+[링크](https://bcho.tistory.com/999), [링크2](https://velopert.com/2389)
+
+웹에서 "로그인" 기능을 구현한다고 생각하면 가장 먼저 떠오르는 개념 쿠키, 세션
+
+쿠키의 경우에는 데이터를 로컬에 저장하기 떄문에 보안 문제로 세션을 사용하는 추세였음, 하지만 세션에도 문제점은 존재했으니  
+1. 만일 서버가 여러 개로 세분화된다면, 각 서버가 다른 세션을 저장하기 때문에 데이터에 일관성이 부족해진다.
+2. 1의 문제를 해결하기 위해, 세션을 전용 서버로 몰아서 저장한다고 치면, 모든 요청을 해당 서버 하나에서 감당해야 하기 때문에 부하가 크다.
+3. 그리고 기존의 웹 이용 환경이 데스크탑의 웹 브라우저만 존재했지만 요즘에는 모바일로 사용하는 비중이 상당히 크기 때문에 웹/앱의 쿠키-세션 처리 방법에 따라 다른 로직을 작성해야 한다.
+
+위의 문제들을 해결하기 위해 `Token`방식이 도입되었으며, 토큰 자체에 정보를 담고 있어서 별도의 인증 로직이 필요없어서 2번의 전용 서버가 필요가 없어진다. 또한 JSON방식의 통신이기 때문에 어떤 Client든 상관없이 Token을 이용할 수 있다.
+
+
+OAuth 방식의 경우에는, 서버에 토큰을 요청하면 서버가 토큰을 생성하며 사용자에게 반환하고, 서버에 저장하기까지 했는데  
+JWT와 같은 Claim 기반은 서버에 토큰을 저장하지 않고, 토큰 데이터를 함께 담아 사용자에게 반환한다.
+
+JWT는 토큰 속성 정보(Claim)를 JSON 형태로 갖는데, 개행문자가 표현된 이런 데이터들은 헤더에 담기에 적합하지 않기 때문에 이 JSON 데이터를 base64 인코딩하여 사용한다. 
+
+토큰을 누가 가로채서 변조해서 사용할 수가 있기 때문에, "서명" 개념의 추가 데이터가 토큰에 따라붙게 되는데 이 서명의 방식이 다양하기 때문에 어떤 서명 방식을 사용했는지가 토큰의 앞쪽에 붙는다. 서명에는 서버에서 가지고 있는 secret key가 이용되기 때문에 변조를 탐지할 수가 있다. 최종적으로는 다음과 같은 형태를 갖는다.
+
+```
+{서명 방식을 정의한 JSON을 BASE64 인코딩}.{JSON Claim을 BASE64 인코딩}.{JSON Claim에 대한 서명}
+```
+

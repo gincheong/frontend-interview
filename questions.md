@@ -13,6 +13,7 @@
   - [Typescript는 뭐가 다른가](./answers.md/#typescript는-뭐가-다른가)
   - [require와 import의 차이](./answers.md/#require와-import의-차이)
   - [Javascript의 메모리 관리](./answers.md/#javascript의-메모리-관리)
+  - [use strict](./answers.md/#user-strict)
 # Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
@@ -21,24 +22,22 @@
   - [GET과 POST의 차이](./answers.md/#get과-post의-차이)
   - [CORS](./answers.md/#cors)
   - [RESTful API](./answers.md/#restful-api)
+  - [JSON Web Token](./answers.md/#json-web-token)
 # CSS
   - [SASS, SCSS](./answers.md/#sass-scss)
 # ETC
   - [디자인 패턴](./answers.md/#디자인-패턴)
   - [테스트 코드 작성하기](./answers.md/#테스트-코드-작성하기)
+  - [프레임워크와 라이브러리](./answers.md/#프레임워크와-라이브러리)
 
 # ?
-- vue랑 react의 차이 뭐 알겠긴 한데, 그래서 왜 react를 골랐나요?
-
 - 테스트 코드 작성하기
-typescript의 enum 메소드?
 
-웹과 앱의 차이
-- 세션 인증 방식에서 요즘 토큰 기반 인증 방식을 많이 쓰는데 그때 쓰는게 jwt이고 이게 왜 좋은지
-- outh2 인증 방식
+- 실행 컨텍스트 [링크](https://poiemaweb.com/js-execution-context)  
+- css애니메이션, js애니메이션의 차이
 - Angular.js 간단하게 알아두기
+  - [React, Vue, Angular](https://wickies.tistory.com/120)
 - React Hooks?
-- ?? URL, URI
 - 웹 표준?
 - 알고리즘들 몇 개 좀 외워두기, 정렬하는거라던가..
   - 머지소트, 퀵소트
