@@ -126,6 +126,31 @@ hello1(); // 'hello gincheong'
 ```
 클로저는 환경을 기억하기 위해 `hello`함수의 `_name` 지역변수를 메모리에 저장하게 된다. 클로저가 계속 존재하는 이상, `_name` 변수는 메모리에서 삭제되지 않기 때문에 메모리 누수가 발생할 수도 있다. 따라서 클로저를 더 사용하지 않게 되면. `hello1 = null;` 과 같이 클로저의 참조를 제거해주는 것이 좋다.
 
+[링크](https://velog.io/@open_h/closure-and-scope)
+
+Private Method 흉내내기
+
+자바스크립트에서는 접근 지정자 개념이 따로 없기 떄문에, private한 멤버 변수나, 메소드를 실질적으로 만들어내는 기능은 없으나 클로저를 이용하여 비슷하게 구현할 수가 있다고 했다.
+
+위쪽 hello 함수의 경우에는 반환되는 함수가 하나였기 때문데, 만들 수 있는 클로저가 하나였으나
+```javascript
+function Counter() {
+  let counter = 0;
+  this.increase = function () {
+    return ++counter;
+  };
+  this.decrease = function () {
+    return --counter;
+  };
+}
+
+const counter = new Counter();
+console.log(counter.increase()); // 1
+console.log(counter.increase()); // 2
+console.log(counter.decrease()); // 1
+```
+이런 식으로 만들면, private 멤버 변수를 제어하는 메소드를 여러 개 만들 수 있다. 
+
 ---
 ## 프로토타입이란
 ---
@@ -178,6 +203,10 @@ __proto__를 통해 상위 속성에 접근한다는 개념은, 모든 객체들
 `.__proto__` 는 모든 객체에 존재하며, 객체 입장에서 자신의 부모 역할을 하는 객체를 가리킴,  
 `.prototype`은 함수형 객체에만 존재하며, 그 객체가 생성자로 쓰일 때 생성된 객체의 부모 역할을 하는 객체를 가리킴  
 (그러면 함수형 객체 자기 자신이 아닌가? 왜 이렇게 표현한지는 잘 모르겠음)
+
+** 참고사항
+`__proto__`는 ES6에서 deprecated되었으며, `Object.getPrototypeOf()` 와 `Object.setPrototypeOf()`를 쓰라고 함
+
 ___
 ## GET과 POST의 차이
 ---
@@ -1207,3 +1236,214 @@ JWT는 토큰 속성 정보(Claim)를 JSON 형태로 갖는데, 개행문자가 
 {서명 방식을 정의한 JSON을 BASE64 인코딩}.{JSON Claim을 BASE64 인코딩}.{JSON Claim에 대한 서명}
 ```
 
+---
+## Execution Context
+---
+[링크](https://velog.io/@tmmoond8/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B8%ED%84%B0%EB%B7%B0-%ED%9B%84%EA%B8%B0-%EB%A9%B4%EC%A0%91-%EC%A7%88%EB%AC%B8-%EC%A0%95%EB%A6%AC-%EC%9E%91%EC%84%B1-%EC%A4%91#5-%EC%8B%A4%ED%96%89%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8)
+
+```
+Execution Context(실행 컨텍스트)는 실행 가능한 코드가 실행되기 위해 필요한 환경
+```
+위에서 말하는 실행 가능한 코드란 ..
+- 전역 코드: 전역 영역에 존재하는 코드
+- Eval 코드: eval 함수로 실행되는 코드
+- 함수 코드: 함수 내에 존재하는 코드
+
+이런 것들이 있다.
+
+기본적으로, 브라우저가 스크립트를 실행한다고 치면 제일 먼저 **전역 컨텍스트** 가 생성된다. 
+
+---
+## Method Chaining
+---
+```
+자기 자신을 반환하면서 다른 함수를 지속적으로 호출하는 릴레이 방식의 프로그래밍 패턴
+```
+
+```javascript
+const MySquare = function() {
+  this.width = 0;
+  this.height = 0;
+}
+
+MySquare.prototype.setWidth = function(newWidth) {
+  this.width = newWidth;
+  return this;
+  // 객체 자기 자신을 반환
+}
+
+MySquare.prototype.setHeight = function(newHeight) {
+  this.height = newHeight;
+  return this;
+}
+
+MySquare.prototype.getSize = function() {
+  return this.height * this.width;
+}
+
+const square = new MySquare();
+const result = square.setWidth(10).setHeight(5).getSize(); // 메소드를 연속적으로 호출
+
+console.log(result);
+```
+
+---
+## 적응형 vs 반응형
+---
+
+적응형 웹은 실행 환경(모바일, 데스크탑, 태블릿 등) 에 따라 각각의 템플릿을 만들어 적용하는 방식
+
+반응형 웹은 하나의 템플릿이 여러 실행 환경에 적용되는 방식
+
+www.naver.com 이 데스크탑 페이지라면, 모바일은 m.naver.com 로 접속되는데 이 경우에는 다른 템플릿이 적용되는 경우로 `적응형`에 속한다.
+
+하나의 페이지에서 화면 크기를 조절하는 것으로 레이아웃으 변경되는 홈페이지들은 `반응형`에 속한다. 
+
+유튜브의 경우에는 데스크탑 페이지에서도 어느정도 반응형을 지원하는데? 모바일 페이지도 따로 존재하기는 한다.
+
+---
+## 함수형 프로그래밍과 객체지향 프로그래밍
+---
+[링크](https://kyung-a.tistory.com/3)
+
+[함수형 프로그래밍](https://velog.io/@kyusung/%ED%95%A8%EC%88%98%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EC%9A%94%EC%95%BD)
+
+함수형 프로그래밍은 `사이드 이펙트가 없는 순수 함수와, 동작의 결과를 강조` 하는 프로그래밍 방식  
+
+순수함수는 동일한 인자가 들어가면, 항상 동일한 출력값을 반환하는 "외부의 영향을 받지 않는" 함수를 말하며, 안전성이 보장된다고 할 수 있다.
+
+함수형 프로그래밍의 장점
+- 사이드이펙트를 걱정하지 않아도 됨
+- 객체지향에 비해 코드가 간결함
+- 비 절차형(?)이라 평가 시점(연산 시점)이 중요하지 않음
+- 테스트가 쉬움 (순수함수이므로 1회 실행만으로 신뢰성이 보장됨)
+
+단점
+- 외부 데이터나, 내부 데이터를 조작할 수 없는 방식임
+
+
+함수형 프로그래밍과 객체지향 프로그래밍의 차이
+- 함수형의 경우
+  - 값의 연산 및 결과 도출 중심으로 코드 작성이 이루어짐
+  - 함수가 인자로 받은 값을 저장하거나 하지 않고, 간결한 과정으로 처리하는 데 주 목적을 둠
+- 객체지향의 경우
+  - 클래스 디자인과, 객체들의 관계를 중심으로 코드 작성이 이루어짐
+  - 상태, 멤버 변수, 메소드 등이 긴밀한 관계를 가짐
+  - 멤버 변수의 상태에 따라 프로그램의 결과가 달라짐
+
+
+객체지향은 `객체 중심`의 프로그래밍 방식  
+기존 절차지향이 위에서 아래 순서대로 명령어가 수행되었다면, 객체지향은 객체라 불리는 요소(집합)의 구성으로 명령어를 수행한다.  
+각 객체 간의 관계를 통해 코드 호출, 수행 순서를 유기적으로 조정할 수 있어 `코드의 간결함, 신뢰성, 재사용성`에 큰 강점을 가진다.
+
+객체지향의 대표적 특징
+- 상속성
+  - 상위 부모 객체의 특성을, 하위 객체가 물려받는 것
+- 은닉성
+  - 객체의 멤버 변수를 외부에서 접근할 수 없도록 캡슐화할 수 있음 (다른 언어의 private, public, protected 키워드 등으로)
+  - Javascript에서는 접근 지정자를 공식적으로 지원하지 않기 때문에, 멤벼 변수 앞에 `_` 를 붙이는 것으로 private, protected 을 표시한다.
+  - 혹은 클로저를 이용하면 private 멤버변수를 구현할 수 있다. 
+- 다형성
+  - 같은 타입이지만 실행 결과가 다양한 객체를 대입할 수 있는 성질
+  - 객체가 지닌 함수를 다른 스코프에서 재정의하여 덮어씌울 수 있다. (오버라이드)
+
+[예제와 같이 보는 함수형 프로그래밍](https://medium.com/@mr.november11/%EB%B2%88%EC%97%AD-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%98%88%EC%A0%9C%EB%A1%9C-%EB%B0%B0%EC%9A%B0%EB%8A%94-%ED%95%A8%EC%88%98%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-ec0a95dc49d1)
+
+---
+## React Hook
+---
+
+```
+Hook이 16.8버전에 새로 추가되었습니다. Hook을 이용하여 Class를 작성할 필요 없이 상태 값과 여러 React의 기능을 사용할 수 있습니다.
+```
+
+`Hook은 계층 변화 없이 상태 관련 로직을 재사용할 수 있도록 도와줍니다.`
+
+## # State Hook
+
+React의 컴포넌트는  
+React.Component 를 상속받는 Class를 만들어 사용하는 클래스형 컴포넌트  
+함수를 선언하여 사용하는 함수형 컴포넌트 두 종류가 존재하는데
+
+클래스형 컴포넌트에서는 Component 클래스를 상속받아 사용하기 떄문에 `state`에 따른 lifecycle을 이용할 수 있었으나 함수형은 그렇지 못했다. 하지만 함수형 컴포넌트에서도 `state`와 그 lifecycle을 이용할 수 있게 한 것이 `Hook`.
+
+직접 코드로 비교하면
+```js
+// 클래스형
+class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+}
+```
+```js
+// 함수형
+import React, { useState } from 'react';
+
+function Example() {
+  const [count, setCount] = useState(0);
+  // return [state 변수, state 값을 변경하는 함수]
+  // 넘겨주는 인자는 state의 초기값
+}
+```
+두 코드가 같은 기능을 한다.
+
+`useState`로 가져온 **state값을 변경하는 함수**(예시의 `setCount`)는 `this.setState`와는 다르게  
+state를 변경할 때 "병합" 하는 방식이 아니라 "대체" 하는 방식이기 때문에, state에 객체를 저장하여 그 객체의 각각을 갱신하려고 할 때 주의해야 함
+
+```js
+const [state, setState] = useState({ left: 0, top: 0, width: 100, height: 100 });
+// 위와 같이 state를 선언했다고 치면
+
+setState(state => ({ ...state, left: e.pageX, top: e.pageY }));
+// 위와 같이 스프레드 연산자를 사용하여 width, height 값이 손실되지 않게 해야 한다.
+```
+말했듯이 대체하는 방식이기 때문에, `...state` 를 넣지 않으면 `state` 에는 `left`와 `top` 만 남게 된다.  
+스프레드 연산자로 해결이 가능하긴 하지만, 애당초 state를 선언할 때 값이 같이 변하는 변수끼리만 묶도록 권장한다.
+
+## # Effect Hook
+
+`Effect Hook을 사용하면 함수 컴포넌트에서 side effect를 수행할 수 있습니다.`
+
+데이터 가져오기, 구독 설정하기, 수동으로 컴포넌트 DOM 수정하기 등이 모두 `side effects`
+
+공식 홈페이지에서는 `componentDidMount`, `componentDidUpdate`, `componentWillUnmount` 를 합친 것이 `useEffect` Hook이라고 생각해도 된다고 함, 컴포넌트가 렌더링 될 때마다 특정 작업을 실행하게 하는 Hook이라고 보면 된다. 
+
+```js
+function Example() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+
+    return () => {
+      // clean-up, effect 에 대한 뒷정리를 하는 부분
+      console.log(`previous count is ${count}`);
+    }
+  });
+}
+```
+`useEffect`가 인자로 갖는 함수 안의 내용은, React의 lifecycle에 따라 `count` state 값이 변경될 때마다 실행된다. useEffect에서 반환되는 익명 함수는 effect에 대한 clean-up을 수행하는 부분으로, state가 변할 시에 이전 state에 대한 로직을 작성할 수 있다.
+
+clean-up 부분은 컴포넌트가 최초 로드될 때는 실행되지 않고, 로드 이후 state가 처음으로 업데이트될 때 최초로 실행된다.
+
+useEffect는, 함수 말고도 다른 하나의 인자를 더 받을 수 있는데, `deps(dependancyList인듯)` 라고 부르며 사용은
+```js
+useEffect(() => {
+  console.log(`watching number: ${number}`);
+}, [number]);
+```
+이렇게 한다. `deps` 인자에 배열 형태로 값을 넣으면, 해당 값의 변화가 있을 때에만 `effect`를 실행하고  
+값의 변화가 없으면 effect를 건너뛴다. 만약 처음의 예시처럼 `deps`를 생략한다면, 아무 state나 변해도 effect가 재실행된다.
+
+Redux에서도 이를 지원하여, `useSelector`, `useDispatch` 로 전역 store를 Hook과 함께 사용할 수 있다. 
+
+** Class형 컴포넌트는, props를 재활용하는 특성 때문에 프로그램에서 예상치 못한 결과가 나올 수 있음, 그 예시는 [여기](https://boxfoxs.tistory.com/395) 에 3초 딜레이 거는 걸로 잘 나와 있음
+
+** useRef 함수, DOM ref을 위한 변수로도 만들 수는 있는데, class의 인스턴스 property와 유사하다고 함.
+
+공식 문서에서도, 함수형 컴포넌트와 함께 Hook 을 사용하기를 권하고 있고, 메모리 사용량도 함수형이 더 적다고 한다. (클래스형 컴포넌트는 React의 Component 클래스를 상속받으면서 그런 문제가 생긴다는 듯?)  
+Hook을 지원하지 않던 때에는 클래스형과 함수형의 차이가 매우 컸으나, 이제는 함수형 컴포넌트를 주로 사용하는 모양
+
+---

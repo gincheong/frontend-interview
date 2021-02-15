@@ -2,8 +2,6 @@
   - [호이스팅이란](./answers.md/#호이스팅이란)
   - [클로저란](./answers.md/#클로저란)
   - [프로토타입이란](./answers.md/#프로토타입이란)
-  - [React와 Vue](./answers.md/#react와-vue)
-  - [React와 Redux](./answers.md/#react와-redux)
   - [state와 prop](./answers.md/#state와-prop)
   - [Event Bubbling/Capture/Delegation](./answers.md/#event-bubblingcapturedelegation)
   - [ES6 주요 문법](./answers.md/#es6-주요-문법)
@@ -14,6 +12,11 @@
   - [require와 import의 차이](./answers.md/#require와-import의-차이)
   - [Javascript의 메모리 관리](./answers.md/#javascript의-메모리-관리)
   - [use strict](./answers.md/#user-strict)
+  - [Method Chaining](./answers.md/#method-chaining)
+# React
+  - [React와 Vue](./answers.md/#react와-vue)
+  - [React와 Redux](./answers.md/#react와-redux)
+  - [React Hook](./answers.md/#react-hook)
 # Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
@@ -25,10 +28,12 @@
   - [JSON Web Token](./answers.md/#json-web-token)
 # CSS
   - [SASS, SCSS](./answers.md/#sass-scss)
+  - [적응형 vs 반응형](./answers.md/#적응형-vs-반응형)
 # ETC
   - [디자인 패턴](./answers.md/#디자인-패턴)
   - [테스트 코드 작성하기](./answers.md/#테스트-코드-작성하기)
   - [프레임워크와 라이브러리](./answers.md/#프레임워크와-라이브러리)
+  - [함수형 프로그래밍과 객체지향 프로그래밍](./answers.md/#함수형-프로그래밍과-객체지향-프로그래밍)
 
 # ?
 - 테스트 코드 작성하기
@@ -37,7 +42,6 @@
 - css애니메이션, js애니메이션의 차이
 - Angular.js 간단하게 알아두기
   - [React, Vue, Angular](https://wickies.tistory.com/120)
-- React Hooks?
 - 웹 표준?
 - 알고리즘들 몇 개 좀 외워두기, 정렬하는거라던가..
   - 머지소트, 퀵소트
@@ -45,6 +49,9 @@
   - 캐시 교체 알고리즘
   - 데드락과 세마포어
   
+- `.bind()` 대신 화살표 함수 사용하기, 리팩토링 
+  - [링크](https://blueshw.github.io/2017/07/01/arrow-function/)
+
 # 기본사항? 
 - 카카오커머스에 ㄷ대한 이해
 - 지원 동기
