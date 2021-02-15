@@ -1447,3 +1447,53 @@ Redux에서도 이를 지원하여, `useSelector`, `useDispatch` 로 전역 stor
 Hook을 지원하지 않던 때에는 클래스형과 함수형의 차이가 매우 컸으나, 이제는 함수형 컴포넌트를 주로 사용하는 모양
 
 ---
+## Context API
+---
+
+```
+context는 React 컴포넌트 트링 안에서 전역적이라고 볼 수 있는 데이터를 공유할 수 있도록 고안된 방법입니다.
+그러한 데이터로는 "현재 로그인한 유저", "테마", "선호 언어" 등이 있습니다.
+```
+
+"테마" 의 경우에 props를 사용해서 각 컴포넌트에 전달한다 치면, 상위 컴포넌트에서 맨 마지막 컴포넌트까지 같은 props를 반복해서 전달해야 하기 때문에, 상당히 번거로운 방법이 된다. 여기서 `context`를 사용하면 중간에 있는 엘리먼트들에 따로따로 props를 넘겨주지 않아도 된다.
+
+```js
+const ThemeContext = React.createContext('light');
+
+function App() {
+  return (
+    <div>
+      <Toolbar />
+    </div>
+  );
+}
+
+function Toolbar() {
+  return (
+    <div>
+      <ThemeButton />
+    </div>
+  );
+}
+
+function ThemeButton() {
+  const themeContext = React.useContext(ThemeContext);
+  
+  return (
+    <span>{themeContext}</span> // light
+  );
+}
+```
+함수형 컴포넌트에서는 위와 같이 `useContext`함수를 통해 Context를 가져와서 사용할 수 있다. 그래서 Context들을 정의해 놓는 디렉토리를 따로 만들어서, 거기서 import해 사용하는 방식도 가능하다.
+
+클래스형 컴포넌트에서는,
+```jsx
+return (
+  <ThemeContext.Provider value={defaultValue}>
+    ...
+  </ThemeContext.Provder>
+);
+```
+이런 식으로 상위 컴포넌트에서 Provider를 사용하면, 하위 컴포넌트 전체에 값이 전파된다. 물론 사용하는 방식은 다르나 여기선 함수형 컴포넌트에 대해서만 기록함
+
+---

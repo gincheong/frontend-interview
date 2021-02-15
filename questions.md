@@ -17,6 +17,7 @@
   - [React와 Vue](./answers.md/#react와-vue)
   - [React와 Redux](./answers.md/#react와-redux)
   - [React Hook](./answers.md/#react-hook)
+  - [Context API](./answers.md/#context-api)
 # Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
