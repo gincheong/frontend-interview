@@ -13,11 +13,14 @@
   - [Javascript의 메모리 관리](./answers.md/#javascript의-메모리-관리)
   - [use strict](./answers.md/#user-strict)
   - [Method Chaining](./answers.md/#method-chaining)
+  - [Callback 지옥 탈출하는 예시](./answers.md/#callback-지옥-탈출하기)
+  - [Call By Value, Call By Ref](./answers.md/#call-by-value,-call-by-ref)
 # React
   - [React와 Vue](./answers.md/#react와-vue)
   - [React와 Redux](./answers.md/#react와-redux)
   - [React Hook](./answers.md/#react-hook)
   - [Context API](./answers.md/#context-api)
+  - [Context API와 Redux의 비교](./answers.md/#context-api와-redux의-비교)
 # Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
@@ -38,12 +41,11 @@
 
 # ?
 - 테스트 코드 작성하기
-
+- Babel
 - 실행 컨텍스트 [링크](https://poiemaweb.com/js-execution-context)  
 - css애니메이션, js애니메이션의 차이
 - Angular.js 간단하게 알아두기
   - [React, Vue, Angular](https://wickies.tistory.com/120)
-- 웹 표준?
 - 알고리즘들 몇 개 좀 외워두기, 정렬하는거라던가..
   - 머지소트, 퀵소트
 - 운영체제 관련 지식?

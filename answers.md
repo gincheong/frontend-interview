@@ -156,7 +156,8 @@ console.log(counter.decrease()); // 1
 ---
 [링크](https://medium.com/@bluesh55/javascript-prototype-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-f8e67c286b67)
 
-`Javascript의 객체는 모두 'Object' 의 하위 객체이며, Prototype Obejct을 통해 연결되어 있다. 이를 Prototype Chain이라 한다.`
+`Javascript의 객체는 모두 'Object' 의 하위 객체이며, Prototype Obejct을 통해 연결되어 있다. 이를 Prototype Chain이라 한다.`  
+`인스턴스가 공통적으로 사용할 property나 method를 프로토타입에 미리 구현해두는 것으로, 인스턴스에서 추가적으로 생성하지 않게 할 수 있음. 이는 메모리 이득이다.`
 
 ```javascript
 function myNumber() {
@@ -206,6 +207,9 @@ __proto__를 통해 상위 속성에 접근한다는 개념은, 모든 객체들
 
 ** 참고사항
 `__proto__`는 ES6에서 deprecated되었으며, `Object.getPrototypeOf()` 와 `Object.setPrototypeOf()`를 쓰라고 함
+
+그리고 ES6에서는 Class 문법이 생기면서, .prototype 으로 직접 접근하여 프로퍼티를 정의하는 방식은 안 쓰게 되었다.  
+어차피 Class도 prototype 기반인 건 동일함
 
 ___
 ## GET과 POST의 차이
@@ -265,7 +269,8 @@ HTML이나, CSS 데이터들이 주로 GET으로 요청되며, 캐싱된다.
   - 컴포넌트 단위 개발이라는 공통점 탓에, 사용법은 달라도 기본적인 구조 자체는 비슷함
   - 리액트의 라이프사이클 (Mount -> Props Update -> State Update -> Unmount)
 - Virtual DOM 사용
-  - Virtual DOM을 사용해서, 실제 DOM에 변화가 일어나는 부분만 변화시키기 때문에 성능 이점을 가짐
+  - Virtual DOM을 사용해서 미리 DOM을 가상으로 그려본 후에, 실제 DOM과의 차이점을 계산함
+  - 결과적으로 실제 DOM에서는 갱신이 필요한 부분만 부분적으로 렌더링을 다시 수행하기 때문에 성능 상 이득
 
 ### 차이점
 1. 컴포넌트의 데이터를 바꿀 때
@@ -1303,6 +1308,7 @@ www.naver.com 이 데스크탑 페이지라면, 모바일은 m.naver.com 로 접
 
 ---
 ## 함수형 프로그래밍과 객체지향 프로그래밍
+Funcional Programming, Object Oriented Programming
 ---
 [링크](https://kyung-a.tistory.com/3)
 
@@ -1497,3 +1503,100 @@ return (
 이런 식으로 상위 컴포넌트에서 Provider를 사용하면, 하위 컴포넌트 전체에 값이 전파된다. 물론 사용하는 방식은 다르나 여기선 함수형 컴포넌트에 대해서만 기록함
 
 ---
+## Context API와 Redux의 비교
+---
+전역 상태 관리를 위한 도구라는 점에서는 동일함
+
+하지만 Redux가 상태 관리 이외의 기능들을 좀 더 많이 제공한다.
+- 로컬 스토리지에 상태를 영속적으로 저장하고, 시작할 때 다시 불러오는 데 뛰어남
+- 상태를 서버에서 미리 채워서 HTML에 담아 클라이언트로 보내고, 앱을 시작할 때 다시 불러오는 데 특히 뛰어남
+- 사용자의 액션을 직렬화하여 상태와 함꼐 버그 리포트에 첨부할 수 있고, 개발자들이 이를 통해 에러를 재현할 수 있음
+- 액션 객체를 네트워크를 통해 보내면 코드를 크게 바꾸지 않아도 협업 환경을 구현할 수 있음
+- 실행취소 내역의 관리나, 낙관적인 변경(optimistic mutations)을 코드를 크게 바꾸지 않고도 구현할 수 있음
+- 개발할 때 상태 내역 사이를 오가고, 액션 내역에서 현재 상태를 다시 계산하는 일을 TDD 스타일로 할 수 있음
+- 개발자 도구에게 완전한 조사와 제어를 가능하게 해서, 개발자들이 자신의 앱을 위한 도구를 직접 만들 수 있게 해줌
+- 비즈니스 로직 대부분을 재사용하면서 UI를 변경할 수 있게 해줌
+
+아직 하나도 와닿는 게 없다...  
+그리고 Context API를 사용하면 High-Frequency한 어플리케이션에서는 성능 이슈가 발생할 수 있다고 한다. 이것도 지금은 잘 모르겠다...
+
+[코드와 함께하는 비교](https://egg-programmer.tistory.com/281)
+
+---
+## Callback 지옥 탈출하기
+---
+예제로 보기
+
+```js
+// 콜백 지옥
+setTimeout((name) => {
+    let coffeeList = name;
+    console.log(coffeeList);
+    
+    setTimeout((name) => {
+        coffeeList += ', ' + name;
+        console.log(coffeeList);
+    
+        setTimeout((name) => {
+            coffeeList += ', ' + name;
+            console.log(coffeeList);
+    
+            setTimeout((name) => {
+                coffeeList += ', ' + name;
+                console.log(coffeeList);
+              }, 500, 'Latte',
+            );
+          }, 500, 'Mocha',
+        );
+      }, 500, 'Americano',
+    );
+  }, 500, 'Espresso',
+);
+```
+
+```js
+// Promise 사용으로 탈출하기
+function addCoffee(newCoffee) {
+  return prevCoffee => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        prevCoffee.push(newCoffee);
+        console.log(prevCoffee);
+        resolve(prevCoffee);
+      }, 500);
+    });
+  }
+}
+
+addCoffee('아메리카노')([])
+  .then(addCoffee('라떼'))
+  .then(addCoffee('믹스커피'));
+```
+예시가 극단적이지 않나 싶기도 한데 이렇게 하면 탈출 가능하다
+
+---
+## Call By Value, Call By Ref
+---
+
+```js
+let a = 1;
+const fun = function(b) {
+  b = b + 1;
+}
+
+fun(a);
+console.log(a); // 1
+```
+자바스크립트는 기본적으로 원시값을 넘기면 `Call By Value` 로 작동한다.
+
+```js
+let a = { num: 10 };
+const fun = function(b) {
+  b.num = 5;
+}
+
+fun(a);
+console.log(a); // { num: 5 }
+```
+원시값이 아닌 객체가 전달되어 `Call By Reference`로 작동했다.
+
