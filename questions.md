@@ -20,6 +20,7 @@
   - [React Hook](./answers.md/#react-hook)
   - [Context API](./answers.md/#context-api)
   - [Context API와 Redux의 비교](./answers.md/#context-api와-redux의-비교)
+  - [Jest와 Enzyme으로 테스트 작성하기](./answers.md/#jest와-enzyme으로-테스트-작성하기)
 # Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
@@ -39,7 +40,8 @@
   - [함수형 프로그래밍과 객체지향 프로그래밍](./answers.md/#함수형-프로그래밍과-객체지향-프로그래밍)
 
 # ?
-- 테스트 코드 작성하기
+<!-- - 테스트 코드 작성하기 -->
+
 - Babel
 - 실행 컨텍스트 [링크](https://poiemaweb.com/js-execution-context)  
 - css애니메이션, js애니메이션의 차이
@@ -51,17 +53,12 @@
   - 캐시 교체 알고리즘
   - 데드락과 세마포어
   
-- `.bind()` 대신 화살표 함수 사용하기, 리팩토링 
-  - [링크](https://blueshw.github.io/2017/07/01/arrow-function/)
-
 # 기본사항? 
-- 카카오커머스에 ㄷ대한 이해
+- 카카오커머스에 대한 이해[카카오커머스 링크](https://kakaocommerce.recruiter.co.kr/appsite/company/index)
 - 지원 동기
 - 다룰 수 있는 언어 종류
 - 개발해본 프로젝트와 설명
 - [?] 개발자로서 하고 싶은 것?
-
-학점 왜 낮니?
 
 원데이코리아 코드 복기?
 
