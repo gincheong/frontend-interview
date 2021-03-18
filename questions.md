@@ -30,6 +30,7 @@
   - [CORS](./answers.md/#cors)
   - [RESTful API](./answers.md/#restful-api)
   - [JSON Web Token](./answers.md/#json-web-token)
+  - [XSS, CSRF](./answers.md/#xss-csrf)
 # CSS
   - [SASS, SCSS](./answers.md/#sass-scss)
   - [적응형 vs 반응형](./answers.md/#적응형-vs-반응형)
@@ -42,16 +43,15 @@
 # ?
 <!-- - 테스트 코드 작성하기 -->
 
+- XSS(Cross-site scripting)를 설명해보세요.
+- 프로젝트의 프론트엔드 성능을 개선하기 위해 어떤 방법을 사용했나요?
+- Debugger 사용
+
 - Babel
 - 실행 컨텍스트 [링크](https://poiemaweb.com/js-execution-context)  
 - css애니메이션, js애니메이션의 차이
 - Angular.js 간단하게 알아두기
   - [React, Vue, Angular](https://wickies.tistory.com/120)
-- 알고리즘들 몇 개 좀 외워두기, 정렬하는거라던가..
-  - 머지소트, 퀵소트
-- 운영체제 관련 지식?
-  - 캐시 교체 알고리즘
-  - 데드락과 세마포어
   
 # 기본사항? 
 - 카카오커머스에 대한 이해[카카오커머스 링크](https://kakaocommerce.recruiter.co.kr/appsite/company/index)
