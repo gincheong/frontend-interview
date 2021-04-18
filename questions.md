@@ -4,6 +4,7 @@
   - [프로토타입이란](./answers.md/#프로토타입이란)
   - [Event Bubbling/Capture/Delegation](./answers.md/#event-bubblingcapturedelegation)
   - [ES6 주요 문법](./answers.md/#es6-주요-문법)
+  - [화살표 함수와 function 키워드 함수의 차이](./answers.md/#화살표-함수와-function-키워드-함수)
   - [async, await](./answers.md#async-await)
   - [.apply, .bind, .call](./answers.md/#apply-bind-call)
   - [Javascript는 싱글 스레드](./answers.md/#javascript는-싱글-스레드)

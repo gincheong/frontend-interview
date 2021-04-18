@@ -615,7 +615,35 @@ connect.then(success => {
 });
 ```
 
-## ! 화살표 함수 선언과, function 키워드 함수 선언의 차이
+7. reduce 함수
+- 배열의 각 값에 대해, 메소드를 실행하고 결과값을 하나로 합쳐 반환하는 함수
+```javascript
+// reduce의 콜백함수의 인자들
+/**
+ * @param {any} acc accumulator 누산기
+ * @param {any} cur 배열에서 참조 중인 값
+ * @param {number} idx 참조 중인 배열의 인덱스
+ * @param {array} src 원본 배열
+ * @return {any} acc값이 반환됨
+ */
+const callback = (acc, cur, idx, src) => ;
+```
+
+사용예시
+```javascript
+// 배열 원소들의 총합을 반환
+const arr = [1, 2, 3, 4, 5];
+
+const result = arr.reduce((acc, cur) => {
+  return acc + cur; // 배열의 각 값을, acc에 누적 덧셈
+});
+
+console.log(result); // 15
+```
+
+---
+## 화살표 함수와 function 키워드 함수
+---
 [링크](https://poiemaweb.com/es6-arrow-function)  
 
 `this`의 차이  
@@ -1688,3 +1716,7 @@ CSRF는 서버로 특정 요청을 보내는 행위 등을 일컫는다.
 
 
 `XSS는 공격대상이 클라이언트, CSRF는 공격대상이 서버`
+
+---
+## 
+---
