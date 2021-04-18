@@ -1718,5 +1718,112 @@ CSRF는 서버로 특정 요청을 보내는 행위 등을 일컫는다.
 `XSS는 공격대상이 클라이언트, CSRF는 공격대상이 서버`
 
 ---
-## 
+## ES7+ 몇 가지 기능들
 ---
+
+### ES7
+- `.includes(value)` 함수
+  - string, array에 사용 가능하며 인자로 오는 값(value)이 string, array에 포함되었는지 확인 가능
+- 지수표현
+  - 3**3 = 27
+
+### ES8
+- `.padStart(number)`, `.padEnd(number)`
+  - 문자열에 사용할 수 있는 함수
+  - 문자열의 길이를 `number`만큼 늘리는데, number가 문자열의 길이보다 크면 해당 공간을 공백으로 채운다.
+  - padStart는 앞쪽을 공백으로 채우고, padEnd는 반대로 뒤쪽을 채운다.
+  ```javascript
+  'ginc'.padStart(6); // '  ginc'
+  'ginc'.padEnd(6); // 'ginc  '
+  ```
+- `Object.values(object), Object.entries(object)`
+  - 오브젝트의 원소들을 배열로 접근할 수 있게 함
+  ```javascript
+  const obj = {
+    id: '아이디',
+    email: '메일'
+  };
+
+  Object.values(obj); // ['아이디', '이메일']
+  Object.entries(obj); // [['id', '아이디'], ['email', '이메일']]
+  ```
+  `.forEach`나, `.map` 함수와 연계해서 사용할 수 있다.
+
+### ES10
+- `.flat()`
+  - 다차원 배열을 평탄하게(?) 만드는 함수
+  - 배열의 빈 공간을 정리할 수도 있음
+  ```javascript
+  const arr = [1, 2, , [3, 4, , [5, , ]]];
+
+  arr.flat(); // [1, 2, 3, 4, [5, , ]];
+  arr.flat(1); // [1, 2, 3, 4, [5, , ]];
+  arr.flat(2); // [1, 2, 3, 4, 5];
+
+  // 여기서 [5, , ] 는 [5, empty] 입니다. 길이가 3이 아님!
+  ```
+- `.trimStart()`, `.trimEnd()`
+  - 공백 없애기
+- `Object.fromEntries(array)`
+  - key-value 쌍의 배열을 object로 변환한다.
+  - `Object.entries()` 함수의 반대기능이라 보면 됨
+  ```javascript
+  const obj = [['a', 1], ['b', 23]];
+
+  Object.fromEntries(obj); // { a: 1, b: 23 }
+  ```
+- `Infinity`
+  - 무한대 숫자를 표현함
+  - `Infinity - 1 === Infinity` 
+- `for of` 반복문
+  - array와, string 같은 iterable에 사용 가능
+  ```javascript
+  for (each of "string") {
+    console.log(each); // s t r i n g, 문자 하나씩 출력됨
+  }
+  ```
+- `for in` 반복문
+  - object와 같은 enumerable에 사용하여, property를 볼 수 있음
+  ```javascript
+  const obj = { a: 1, b: 'asd', c: 100 };
+
+  for (each in obj) {
+    console.log(each); // a b c, 객체의 key값만 가져옴
+  } 
+  ```
+  - array와 string에 `for in`을 사용하면, 인덱스가 반환된다. (0 ~ )
+    내부적으로 index를 property로 갖는 object구조이기 때문
+
+## ES2020
+- `bigInt`
+  - 새로 추가된 숫자 Type
+  - 숫자 뒤에 n을 붙여, `Number.MAX_SAFE_INTEGER` 를 초과하는 값을 표현할 수 있다.
+- Optional Chaining Operator
+  - object에 property가 존재하는지 판별하는 키워드
+  - property 뒤에 물음표(?)를 붙여 사용할 수 있음
+  ```javascript
+  const obj = {
+    students: {
+      david: {
+        id: 1,
+        phone: '1234'
+      }
+    }
+  };
+
+  obj.students.jason.id; // TypeError: Cannot read property 'id' of undefined
+  obj.students.jason?.id; // undefined
+  ```
+  특정 상황에서 에러 방지하기 위해 사용할 수 있겠다.
+- Nullish Coalescing Operator
+  - 값이 `null`이거나, `undefined`인지 판단할 수 있음
+  - 값 뒤에 `??` 을 붙여 쓸 수 있다.
+  ```javascript
+  const nullValue = null;
+  const undefinedValue = undefined;
+  const normalValue = 123;
+
+  console.log(nullValue ?? 'it is null'); // it is null
+  console.log(undefinedValue ?? 'it is undefined'); // it is undefined
+  console.log(normalValue ?? 'it is not null/undefined'); // 123[
+  ```
