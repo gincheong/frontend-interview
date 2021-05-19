@@ -28,6 +28,10 @@
   - [Method Chaining](./answers.md/#method-chaining)
   - [Callback 지옥 탈출하는 예시](./answers.md/#callback-지옥-탈출하기)
   - [Call By Value, Call By Ref](./answers.md/#call-by-value-call-by-ref)
+  - [실행 컨텍스트란](./answers.md/#execution-context)
+  - [스코프 체인](./answers.md/#스코프-체인이란)
+  - [렉시컬 스코프](./answers.md/#렉시컬-스코프)
+  - [마이크로태스크와 매크로태스크](./answers.md/#마이크로태스크와-매크로태스크)
 ## React
   - [state와 prop](./answers.md/#state와-prop)
   - [React와 Vue](./answers.md/#react와-vue)
@@ -36,6 +40,8 @@
   - [Context API](./answers.md/#context-api)
   - [Context API와 Redux의 비교](./answers.md/#context-api와-redux의-비교)
   - [Jest와 Enzyme으로 테스트 작성하기](./answers.md/#jest와-enzyme으로-테스트-작성하기)
+  - [JSX의 Key](./answers.md/#jsx의-key)
+  - [Virtual DOM의 이점](./answers.md/#virtual-dom의-이점)
 ## Browser
   - [브라우저가 렌더링되는 순서](./answers.md/#웹-페이지가-렌더링되는-과정)
   - [브라우저 저장소들의 차이점](./answers.md/#브라우저-저장소들의-차이점)
