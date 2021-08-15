@@ -33,6 +33,7 @@
   - [스코프 체인](./answers.md/#스코프-체인이란)
   - [렉시컬 스코프](./answers.md/#렉시컬-스코프)
   - [마이크로태스크와 매크로태스크](./answers.md/#마이크로태스크와-매크로태스크)
+  - [배열에 비동기 작업 수행하기](./answers.md/#배열에-비동기-작업-수행하기)
 ## React
   - [state와 prop](./answers.md/#state와-prop)
   - [React와 Vue](./answers.md/#react와-vue)

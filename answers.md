@@ -2111,3 +2111,100 @@ console.log(arr) // [empty x 2]
 
 empty는 배열에서 특수한 값으로 간주되어, 배열을 순회하는 메소드 등이 이 empty를 만나면, 순회하지 않고 무시한다.
 
+---
+## 배열에 비동기 작업 수행하기
+---
+`순차 처리, 병렬 처리`  
+
+`요약: forEach로 비동기 처리 하려고 하지 마라`
+
+배열에 든 요소들을 대상으로, 비동기 함수를 실행하고 싶을 수 있다.  
+그리고 배열의 요소를 순회하는 방법도 다양하다.
+
+첫째로 index를 이용한 기본적인 `for` 구문  
+배열의 `.forEach` 함수를 이용한 `for-each` 구문  
+마지막으로 `for-of` 구문
+
+여기서 나는 `for-each`를 애용했는데, 이 함수는 비동기 처리에 적합하지가 못하다.  
+forEach를 써서 비동기 처리를 한다 치면 이렇게 함수를 쓰면 작동할 거라 생각했다.
+```js
+function promiseFunc(number) {
+  // 500ms 후에 number를 출력함
+  return new Promise(resolve => setTimeout(() => resolve(number), 500));
+}
+
+const arr = [1, 2, 3, 4];
+
+arr.forEach(async (each) => {
+  const result = await promiseFunc(each);
+  console.log(result);
+});
+```
+각 요소를 대상으로, 500ms씩 기다리는 `promiseFunc` 함수를 `async-await`를 이용했으니  
+500ms마다 숫자가 하나씩 출력될 거라고 생각을 할 수 있는데, 실제로 실행하면 숫자가 처음 500ms 이후에 한 번에 출력된다.
+
+여기서 forEach의 polyfill을 보면 왜 위와 같은 일이 발생하는 지 알 수 있다.
+```js
+Array.prototype.forEach = function (callback) {
+  for (let index = 0; index < this.length; index++) {
+    callback(this[index], index, this);
+  }
+};
+```
+forEach도 내부에서는 이렇게 `for` 반복문을 사용하며, 인자로 전달받은 callback 함수를 하나씩 호출하는걸 볼 수 있다.  
+여기서 우리가 `async-await`를 붙이는 부분은? callback 함수의 내부가 된다.
+
+그러니 callback 함수의 내부만 비동기로 작동하고, 그 바깥의 `for` 반복문은 비동기로 처리되지 않는다.  
+우리는 반복문이 비동기로 돌기를 바라는데, 그것이 아니게 됨  
+풀어서 보면 이해가 되는데 그냥 `forEach`로만 쓰면 착각하게 된다.
+
+그래서 `forEach`를 쓰지 않고, `for-of`나 일반 `for` 반복문을 이용하는 것이 옳다.
+```js
+function promiseFunc(number) {
+  // 500ms 후에 number를 출력함
+  return new Promise(resolve => setTimeout(() => resolve(number), 500));
+}
+
+const arr = [1, 2, 3, 4];
+
+(async () => {
+  for (const each of arr) {
+    const result = await promiseFunc(each);
+    console.log(result);
+  }
+})();
+```
+이렇게 for문을 실행하는 구문 자체를 통째로 `async-await`처리 해야 올바르게 500ms씩 차례로 숫자가 출력된다.
+
+여기까지는 *순차 처리*를 위한 코드 작성법이고, 비동기 처리를 실시하되 순서가 중요하지 않은 경우에는 *병렬 처리*를 할 수 있다.
+
+병렬 처리? 아까 `forEach`로 한 번에 실행되던거 병렬 처리 아닌가? 라고 생각하면 안 된다
+```js
+(async () => {
+  arr.forEach(async each => {
+    const result = await promiseFunc(each);
+    console.log(result);
+  });
+
+  await console.log('done');
+})();
+```
+애당초 `forEach`는 비동기 처리를 제대로 해 준 게 아니기 때문에, 이렇게 코드를 작성해도 `done` 이 가장 먼저 출력된다.
+
+비동기 처리가 `forEach`의 콜백 내부에서만 작동하기 때문에, 바로 `done`을 출력하는 코드가 실행돼버린다. 이럴 때는
+
+`Promise.all()`을 사용하면 올바르게 병렬처리를 대기할 수 있다.
+```js
+(async () => {
+  const promises = arr.map(async each => {
+    const result = await promiseFunc(each);
+    console.log(result);
+  });
+  await Promise.all(promises);
+
+  console.log('done');
+})();
+```
+`map`함수로 배열의 각 객체의 `Promise` 객체들을 반환받고, 반환받은 객체들을 `Promise.all()` 함수를 이용해서 기다릴 수 있다.  
+이렇게 되면 함수 전체가 비동기 처리되어 올바르게 각 `promiseFunc()`의 실행을 기다리고, 마지막으로 `done`이 출력된다.
+
